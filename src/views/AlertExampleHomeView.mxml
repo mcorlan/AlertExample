@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="HomeView">
+	
+	<fx:Script>
+		<![CDATA[
+			import org.corlan.dialog.Alert;
+			import org.corlan.dialog.PopupList;
+			import org.corlan.dialog.skins.AlertSkin;
+			import spark.events.PopUpEvent;
+			
+			private var a:Alert;
+			private var p:PopupList;
+			
+			
+			private function onAlert(useCustomSkin:Boolean):void { 
+				a = new Alert();
+				a.message = "Are you sure you want to delete this item?";
+				a.addEventListener(PopUpEvent.CLOSE, onAlertClose, false, 0, true);
+				a.width = stage.width - 40;
+				a.x = 20;
+				if (useCustomSkin) {
+					a.setStyle("skinClass",  AlertSkin);
+				}
+				a.open(this, true);
+				a.y = (stage.height  - a.height) / 2;
+			}
+			
+			private function onAlertClose(e:PopUpEvent):void {
+				trace(e.commit);
+				a = null;
+			}
+			
+			private function onSelectCity():void {
+				p = new PopupList();
+				p.allowMultipleSelection = true;
+				p.dataProvider = arr;
+				p.labelField = "name";
+				p.addEventListener(PopUpEvent.CLOSE, onPopupClose, false, 0, true);
+				p.width = stage.width - 40;
+				p.height = stage.height;
+				p.x = 20;
+				p.y = 0;
+				var v:Vector.<Object> = new Vector.<Object>();
+				v.push(arr[1]);
+				p.selectedItems = v;
+				p.open(this, true);
+			}
+			
+			private function onPopupClose(e:PopUpEvent):void {
+				if (e.commit) {
+					var selectedItems:Vector.<Object> = e.data as Vector.<Object>;
+					
+					for (var i:int=0; i<selectedItems.length; i++) {
+						trace(selectedItems[i].name);
+					}
+				}
+				p = null;
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<s:ArrayCollection id="arr">
+			<fx:Object name="Berlin" pk="4"/>
+			<fx:Object name="Bucharest" pk="1"/>
+			<fx:Object name="London" pk="5"/>
+			<fx:Object name="Los Angeles" pk="3"/>
+			<fx:Object name="San Francisco" pk="2"/>
+			<fx:Object name="New York" pk="6"/>
+			<fx:Object name="Denver" pk="7"/>
+			<fx:Object name="San Jose" pk="8"/>
+			<fx:Object name="Paris" pk="9"/>
+			<fx:Object name="Hamburg" pk="10"/>
+			<fx:Object name="Milano" pk="11"/>
+			<fx:Object name="Munich" pk="12"/>
+			<fx:Object name="Tokyo" pk="13"/>
+			<fx:Object name="Beijing" pk="14"/>
+			<fx:Object name="Seoul" pk="15"/>
+			<fx:Object name="Honk Kong" pk="16"/>
+			<fx:Object name="Singapore" pk="17"/>
+		</s:ArrayCollection>
+	</fx:Declarations>
+	<s:layout>
+		<s:VerticalLayout/>
+	</s:layout>
+	
+	<s:Spacer height="30"/>
+	<s:Button label="Show Alert Window" click="onAlert(false)" width="100%"/>
+	<s:Button label="Show Alert Window with Skin" click="onAlert(true)" width="100%"/>
+	<s:Button label="Select City" click="onSelectCity()" width="100%"/>
+	
+</s:View>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SkinnablePopUpContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+						   xmlns:s="library://ns.adobe.com/flex/spark" 
+						   backgroundColor="0x898989" width="400">
+	<s:layout>
+		<s:VerticalLayout gap="20" paddingBottom="10" paddingLeft="30" paddingRight="30" paddingTop="30" horizontalAlign="center"/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			
+			private var _message:String;
+			
+			[Bindable]
+			public function get message():String {
+				return _message;
+			}
+
+			public function set message(value:String):void {
+				_message = value;
+			}
+
+			private function onClick(commit:Boolean):void {
+				super.close(commit);				
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:Label text="{message}" width="100%" textAlign="center"/>
+
+	<s:HGroup width="100%">
+		<s:Button label="Yes" width="50%" click="onClick(true)"/>
+		<s:Button label="No" width="50%" click="onClick(false)"/>
+	</s:HGroup>
+	
+</s:SkinnablePopUpContainer>

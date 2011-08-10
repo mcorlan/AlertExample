@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SkinnablePopUpContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+						   xmlns:s="library://ns.adobe.com/flex/spark" 
+						   backgroundColor="0x898989" width="400">
+	<s:layout>
+		<s:VerticalLayout gap="20" paddingBottom="10" paddingLeft="30" 
+						  paddingRight="30" paddingTop="30" horizontalAlign="center"/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			
+			private var _dataProvider:ArrayCollection;
+			private var _labelField:String;
+			private var _allowMultipleSelection:Boolean;
+			private var _selectedItems:Vector.<Object>;
+			
+			[Bindable]
+			public function get selectedItems():Vector.<Object> {
+				return _selectedItems;
+			}
+
+			public function set selectedItems(v:Vector.<Object>):void {
+				_selectedItems = v;
+			}
+
+			[Bindable]
+			public function get allowMultipleSelection():Boolean {
+				return _allowMultipleSelection;
+			}
+
+			public function set allowMultipleSelection(v:Boolean):void {
+				_allowMultipleSelection = v;
+			}
+
+			[Bindable]
+			public function get labelField():String {
+				return _labelField;
+			}
+
+			public function set labelField(v:String):void {
+				_labelField = v;
+			}
+			
+			[Bindable]
+			public function get dataProvider():ArrayCollection {
+				return _dataProvider;
+			}
+
+			public function set dataProvider(v:ArrayCollection):void {
+				_dataProvider = v;
+			}
+			
+			private function onClick(commit:Boolean):void {
+				super.close(commit, list.selectedItems);				
+			}
+		]]>
+	</fx:Script>
+	
+	<s:Label text="Select an item:" width="100%"/>
+	
+	<s:List id="list" width="100%" height="100%" 
+			dataProvider="{dataProvider}" 
+			labelField="{labelField}" 
+			allowMultipleSelection="{allowMultipleSelection}"
+			selectedItems="{selectedItems}"/>
+		
+	<s:HGroup width="100%">
+		<s:Button label="OK" width="50%" click="onClick(true)"/>
+		<s:Button label="Cancel" width="50%" click="onClick(false)"/>
+	</s:HGroup>
+	
+</s:SkinnablePopUpContainer>
